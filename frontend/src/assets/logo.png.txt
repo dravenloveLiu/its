@@ -1,0 +1,2 @@
+This is a placeholder for the logo image.
+To replace this with a real logo, please add an actual .png file. 
