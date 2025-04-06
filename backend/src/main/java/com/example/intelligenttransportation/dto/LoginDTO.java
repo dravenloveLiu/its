@@ -28,12 +28,10 @@ public class LoginDTO implements Serializable {
     /**
      * 验证码
      */
-    @NotBlank(message = "验证码不能为空")
     private String captcha;
 
     /**
      * 验证码ID（用于服务端校验）
      */
-    @NotBlank(message = "验证码ID不能为空")
     private String captchaId;
 } 

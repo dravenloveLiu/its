@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(10);
     }
 
     @Override
@@ -87,7 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login",
                         "/auth/register",
                         "/auth/captcha",
-                        "/auth/refreshToken").permitAll()
+                        "/auth/refreshToken",
+                        "/auth/logout",
+                        "/test/**").permitAll()
+                // 允许分析接口匿名访问（用于测试）
+                .antMatchers("/analysis/**").permitAll()
                 // 跨域预检请求
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 // 除上述请求外的所有请求需要鉴权认证

@@ -34,7 +34,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=UTF-8");
         
         // 创建权限不足的错误响应
-        Result<Object> result = Result.failed(ResultCode.FORBIDDEN);
+        Result result = Result.failed(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage());
         
         // 写入响应
         PrintWriter writer = response.getWriter();

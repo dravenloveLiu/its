@@ -20,7 +20,7 @@ public class Role {
     private String roleName;
     
     /**
-     * 角色编码
+     * 角色代码
      */
     private String roleCode;
     
@@ -30,17 +30,7 @@ public class Role {
     private String description;
     
     /**
-     * 排序号
-     */
-    private Integer sort;
-    
-    /**
-     * 状态（0：禁用，1：启用）
-     */
-    private Integer status;
-    
-    /**
-     * 创建人ID
+     * 创建者ID
      */
     private Long createUser;
     
@@ -50,7 +40,7 @@ public class Role {
     private Date createTime;
     
     /**
-     * 更新人ID
+     * 更新者ID
      */
     private Long updateUser;
     

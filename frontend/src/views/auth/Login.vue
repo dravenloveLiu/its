@@ -65,8 +65,8 @@
 </template>
 
 <script>
-// 暂时注释掉api导入，因为目前使用的是模拟登录
-// import api from '@/api'
+// 导入api
+import api from '@/api'
 import { mapActions } from 'vuex'
 
 export default {
@@ -194,34 +194,21 @@ export default {
           }
           
           this.loading = true;
-          // 模拟登录成功
-          setTimeout(() => {
-            this.login({
-              token: 'mock-token-12345',
-              userInfo: {
-                username: this.loginForm.username,
-                role: 'admin'
-              }
-            });
-            this.$message.success('登录成功');
-            
-            // 登录成功后的跳转处理
-            this.redirectToTargetRoute();
-            
-            this.loading = false;
-          }, 1000);
           
-          // 实际使用时应该调用接口
-          /*
+          // 实际使用时调用接口
           api.login({
             username: this.loginForm.username,
             password: this.loginForm.password,
-            captcha: this.loginForm.captcha
+            captcha: this.loginForm.captcha,
+            captchaId: 'temp-captcha-id' // 临时值，实际项目中应该是从后端获取的验证码ID
           }).then(res => {
             // 登录成功
             this.login({
               token: res.data.token,
-              userInfo: res.data.userInfo
+              userInfo: {
+                username: res.data.username,
+                role: 'admin' // 简化处理，应该从响应中获取角色
+              }
             });
             this.$message.success('登录成功');
             
@@ -234,7 +221,6 @@ export default {
           }).finally(() => {
             this.loading = false;
           });
-          */
         }
       })
     },

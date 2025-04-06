@@ -1,172 +1,120 @@
 package com.example.intelligenttransportation.common;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
  * 通用响应结果类
  */
-@Data
-public class Result<T> implements Serializable {
-
+public class Result implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 状态码
-     */
     private Integer code;
-
-    /**
-     * 消息
-     */
     private String message;
+    private Object data;
 
-    /**
-     * 数据
-     */
-    private T data;
-
-    /**
-     * 是否成功
-     */
-    private Boolean success;
-
-    /**
-     * 私有构造方法
-     */
-    private Result() {
+    public Result() {
     }
 
-    /**
-     * 私有构造方法
-     *
-     * @param code    状态码
-     * @param message 消息
-     * @param data    数据
-     */
-    private Result(Integer code, String message, T data, Boolean success) {
+    public Result(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public Result(Integer code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
-        this.success = success;
+    }
+
+    /**
+     * 成功返回结果
+     */
+    public static Result success() {
+        return new Result(200, "操作成功");
     }
 
     /**
      * 成功返回结果
      *
-     * @param <T> 数据类型
-     * @return 结果
+     * @param data 获取的数据
      */
-    public static <T> Result<T> success() {
-        return new Result<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null, true);
+    public static Result success(Object data) {
+        return new Result(200, "操作成功", data);
     }
 
     /**
      * 成功返回结果
      *
-     * @param data 数据
-     * @param <T>  数据类型
-     * @return 结果
+     * @param message 提示信息
+     * @param data    获取的数据
      */
-    public static <T> Result<T> success(T data) {
-        return new Result<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data, true);
-    }
-
-    /**
-     * 成功返回结果
-     *
-     * @param message 消息
-     * @param data    数据
-     * @param <T>     数据类型
-     * @return 结果
-     */
-    public static <T> Result<T> success(String message, T data) {
-        return new Result<>(ResultCode.SUCCESS.getCode(), message, data, true);
+    public static Result success(String message, Object data) {
+        return new Result(200, message, data);
     }
 
     /**
      * 失败返回结果
      *
-     * @param <T> 数据类型
-     * @return 结果
+     * @param message 提示信息
      */
-    public static <T> Result<T> failed() {
-        return new Result<>(ResultCode.FAILED.getCode(), ResultCode.FAILED.getMessage(), null, false);
+    public static Result failed(String message) {
+        return new Result(500, message);
     }
 
     /**
      * 失败返回结果
      *
-     * @param message 消息
-     * @param <T>     数据类型
-     * @return 结果
+     * @param code    状态码
+     * @param message 提示信息
      */
-    public static <T> Result<T> failed(String message) {
-        return new Result<>(ResultCode.FAILED.getCode(), message, null, false);
+    public static Result failed(Integer code, String message) {
+        return new Result(code, message);
     }
 
     /**
-     * 失败返回结果
+     * 参数验证失败返回结果
      *
-     * @param resultCode 状态码
-     * @param <T>        数据类型
-     * @return 结果
+     * @param message 提示信息
      */
-    public static <T> Result<T> failed(ResultCode resultCode) {
-        return new Result<>(resultCode.getCode(), resultCode.getMessage(), null, false);
-    }
-
-    /**
-     * 失败返回结果
-     *
-     * @param resultCode 状态码
-     * @param message    消息
-     * @param <T>        数据类型
-     * @return 结果
-     */
-    public static <T> Result<T> failed(ResultCode resultCode, String message) {
-        return new Result<>(resultCode.getCode(), message, null, false);
-    }
-
-    /**
-     * 参数校验失败返回结果
-     *
-     * @param <T> 数据类型
-     * @return 结果
-     */
-    public static <T> Result<T> validateFailed() {
-        return failed(ResultCode.VALIDATE_FAILED);
-    }
-
-    /**
-     * 参数校验失败返回结果
-     *
-     * @param message 消息
-     * @param <T>     数据类型
-     * @return 结果
-     */
-    public static <T> Result<T> validateFailed(String message) {
-        return new Result<>(ResultCode.VALIDATE_FAILED.getCode(), message, null, false);
+    public static Result validateFailed(String message) {
+        return new Result(400, message);
     }
 
     /**
      * 未登录返回结果
-     *
-     * @param <T> 数据类型
-     * @return 结果
      */
-    public static <T> Result<T> unauthorized() {
-        return failed(ResultCode.UNAUTHORIZED);
+    public static Result unauthorized() {
+        return new Result(401, "暂未登录或token已经过期");
     }
 
     /**
      * 未授权返回结果
-     *
-     * @param <T> 数据类型
-     * @return 结果
      */
-    public static <T> Result<T> forbidden() {
-        return failed(ResultCode.FORBIDDEN);
+    public static Result forbidden() {
+        return new Result(403, "没有相关权限");
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 } 

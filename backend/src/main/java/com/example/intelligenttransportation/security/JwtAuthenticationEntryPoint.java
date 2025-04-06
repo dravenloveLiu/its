@@ -34,7 +34,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json;charset=UTF-8");
         
         // 创建未授权的错误响应
-        Result<Object> result = Result.failed(ResultCode.UNAUTHORIZED);
+        Result result = Result.failed(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage());
         
         // 写入响应
         PrintWriter writer = response.getWriter();
